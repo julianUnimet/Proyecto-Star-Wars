@@ -20,3 +20,5 @@ def obtener_informacion(link:str):
     else:
         print(f"Error: {informacion.status_code}")
 
+    
+

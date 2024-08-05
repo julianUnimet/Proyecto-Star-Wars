@@ -1,13 +1,16 @@
 from os import system
+import creador_de_objetos
 
 class App:
     def __init__(self) -> None:
+        self.crear_objetos()
         self.start()
 
 
     def start(self):
         """Da inicio a todas las funcionalidades del programa
         """
+        
         
         while True:
             self.imprimir_menu_principal()
@@ -70,7 +73,11 @@ class App:
             return 999
 
     def mostrar_lista_peliculas(self, peliculas:list):
-        pass
+        system("cls")
+        for i in self.peliculas:
+            i.informacion()
+
+        input("Ingrese cualquier tecla para volver al menu anterior: ") 
 
     def mostrar_lista_seres_vivos(self, seres_vivos:list):
         pass
@@ -82,6 +89,9 @@ class App:
         #revisar si es necesaria la busqueda por id o si solo se necesita por nombre
         #se puede hacer una busqueda de las dos formas revisando si el parametro es un entero o no
         pass
+
+    def crear_objetos(self):
+        self.peliculas = creador_de_objetos.crear_peliculas()
 
 #Este llamado esta aqui para probar el codigo, luego este llamado se debe hacer desde main.py     
 app = App()
