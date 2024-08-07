@@ -1,4 +1,4 @@
-from os import system
+import funciones
 import creador_de_objetos
 
 class App:
@@ -37,7 +37,7 @@ class App:
     def imprimir_menu_principal(self):
         """Limpia la consola e Imprime en pantalla el menu principal.
         """
-        system("cls")
+        funciones.limpiar_consola()
         print("BIENVENIDO A LA ENCICLOPEDIA DE STAR WARS")
         print()
         print("\t[1] Mostrar lista de peliculas")
@@ -73,7 +73,7 @@ class App:
             return 999
 
     def mostrar_lista_peliculas(self, peliculas:list):
-        system("cls")
+        funciones.limpiar_consola()
         for i in self.peliculas:
             i.informacion()
 
@@ -94,4 +94,4 @@ class App:
         self.peliculas = creador_de_objetos.crear_peliculas()
 
 #Este llamado esta aqui para probar el codigo, luego este llamado se debe hacer desde main.py     
-app = App()
+#app = App()

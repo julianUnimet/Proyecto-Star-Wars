@@ -26,6 +26,16 @@ def crear_peliculas():
 
     return peliculasOBJ 
 
+def crear_especies():
+    """Crea los objetos de tipo Especie
+
+    Returns:
+        list: retorna una lista con los objetos de tipo especie
+    """
+    especiesOBJ = [] #Lista de objetos
+
+    info_especies = manejador_API.obtener_informacion("https://www.swapi.tech/api/species")
+
 def extractor_id_desde_url(lista_urls:list):
     """Esta funcion extrae el id de los url aprovechando que el id esta al final del url. Solo funciona si los unicos valores numericos que aparecen son los del id
 
@@ -47,4 +57,4 @@ def extractor_id_desde_url(lista_urls:list):
 
     return ids
 
-crear_peliculas()
+pelis = crear_peliculas()
