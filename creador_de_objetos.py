@@ -1,4 +1,5 @@
 from Pelicula import Pelicula
+from Especie import Especie
 import manejador_API
 
 def crear_peliculas():
@@ -34,7 +35,29 @@ def crear_especies():
     """
     especiesOBJ = [] #Lista de objetos
 
-    info_especies = manejador_API.obtener_informacion("https://www.swapi.tech/api/species")
+    info_especies = manejador_API.obtener_informacion_de_varias_paginas("https://www.swapi.tech/api/species")
+
+    for info_especie in info_especies:
+
+        id = info_especie["result"]["uid"]
+
+        propiedades = info_especie["result"]["properties"]
+        nombre = propiedades["name"]
+        altura = propiedades["average_height"]
+        clasificacion = propiedades["classification"]
+        lengua_materna = propiedades["language"]
+        planeta_origen = extractor_id_desde_url([propiedades["homeworld"]])[0] #Solo se espera un id, por lo que paso el id y no una lista
+        personajes_de_esta_especie = extractor_id_desde_url(propiedades["people"])        
+        peliculas = []
+
+        especiesOBJ.append(Especie(id, nombre, altura, clasificacion, lengua_materna, planeta_origen, personajes_de_esta_especie, peliculas))
+
+    return especiesOBJ
+
+
+
+
+
 
 def extractor_id_desde_url(lista_urls:list):
     """Esta funcion extrae el id de los url aprovechando que el id esta al final del url. Solo funciona si los unicos valores numericos que aparecen son los del id
@@ -56,5 +79,3 @@ def extractor_id_desde_url(lista_urls:list):
             ids.append(id)
 
     return ids
-
-pelis = crear_peliculas()

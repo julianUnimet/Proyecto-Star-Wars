@@ -11,6 +11,8 @@ class Pelicula:
         self.planetas = planetas
 
     def informacion(self):
+        """Imprime en pantalla la informacion de la pelicula
+        """
         print(f"Titulo de la pelicula: {self.titulo}")
         print(f"Episodio: {self.episodio}")
         print(f"Dirigida por: {self.director}")

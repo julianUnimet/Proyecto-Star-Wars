@@ -3,6 +3,7 @@ import creador_de_objetos
 
 class App:
     def __init__(self) -> None:
+        funciones.limpiar_consola()
         self.crear_objetos()
         self.start()
 
@@ -76,11 +77,19 @@ class App:
         funciones.limpiar_consola()
         for i in self.peliculas:
             i.informacion()
+            print("--------------------------------------------------")
 
         input("Ingrese cualquier tecla para volver al menu anterior: ") 
 
     def mostrar_lista_seres_vivos(self, seres_vivos:list):
-        pass
+        funciones.limpiar_consola()
+        for i in self.especies:
+            i.informacion()
+            print("--------------------------------------------------")
+        
+        print(f"En total hay {len(self.especies)} especies")
+        print()
+        input("Ingrese cualquier tecla para volver al menu anterior: ") 
 
     def mostrar_lista_planetas(self, planetas:list):
         pass
@@ -92,6 +101,7 @@ class App:
 
     def crear_objetos(self):
         self.peliculas = creador_de_objetos.crear_peliculas()
+        self.especies = creador_de_objetos.crear_especies()
 
 #Este llamado esta aqui para probar el codigo, luego este llamado se debe hacer desde main.py     
 #app = App()

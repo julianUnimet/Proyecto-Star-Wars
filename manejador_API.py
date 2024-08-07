@@ -5,7 +5,7 @@ import requests
 import funciones
 
 def obtener_informacion(link:str):
-    """Optiene la informacion desde el enlace link
+    """Obtiene la informacion desde el enlace link
 
     Args:
         link (str): URL de la informacion
