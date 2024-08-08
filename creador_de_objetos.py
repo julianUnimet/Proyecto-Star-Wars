@@ -1,5 +1,6 @@
 from Pelicula import Pelicula
 from Especie import Especie
+from Planeta import Planeta
 import manejador_API
 
 def crear_peliculas():
@@ -27,11 +28,15 @@ def crear_peliculas():
 
     return peliculasOBJ 
 
-def crear_especies():
+def crear_especies(peliculas:list, planetas:list):
     """Crea los objetos de tipo Especie
+    
+    Args:
+        peliculas (list): Lista de objetos de tipo pelicula
+        planetas (list): Lista de objetos de tipo planeta
 
     Returns:
-        list: retorna una lista con los objetos de tipo especie
+        list[Especie]: retorna una lista con los objetos de tipo especie
     """
     especiesOBJ = [] #Lista de objetos
 
@@ -48,11 +53,40 @@ def crear_especies():
         lengua_materna = propiedades["language"]
         planeta_origen = extractor_id_desde_url([propiedades["homeworld"]])[0] #Solo se espera un id, por lo que paso el id y no una lista
         personajes_de_esta_especie = extractor_id_desde_url(propiedades["people"])        
-        peliculas = []
 
-        especiesOBJ.append(Especie(id, nombre, altura, clasificacion, lengua_materna, planeta_origen, personajes_de_esta_especie, peliculas))
+        especiesOBJ.append(Especie(id, nombre, altura, clasificacion, lengua_materna, planeta_origen, planetas, personajes_de_esta_especie, peliculas))
 
     return especiesOBJ
+
+def crear_planetas(peliculas:list, personajes:list):
+    """Crea los objetos tipo Planeta
+
+    Args:
+        peliculas (list): Lista de objetos de tipo pelicula
+        personajes (list): Lista de objetos de tipo personaje
+
+    Returns:
+        list[Planetas]: Lista de objetos de tipo Planeta
+    """
+
+    planetasOBJ = [] #Lista de objetos
+
+    info_planetas = manejador_API.obtener_informacion_de_varias_paginas("https://www.swapi.tech/api/planets")
+
+    for info_planeta in info_planetas:
+        id = info_planeta["result"]["uid"]    
+
+        propiedades = info_planeta["result"]["properties"]
+        nombre = propiedades["name"]
+        perdiodo_orbita = propiedades["orbital_period"]
+        periodo_rotacion = propiedades["rotation_period"]
+        cantidad_habitantes = propiedades["population"]
+        tipo_clima = propiedades["climate"]
+
+        planetasOBJ.append(Planeta(id, nombre, perdiodo_orbita, periodo_rotacion, cantidad_habitantes, tipo_clima, peliculas, personajes))
+
+    return planetasOBJ
+
 
 
 

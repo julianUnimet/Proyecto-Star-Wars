@@ -5,6 +5,12 @@ class App:
     def __init__(self) -> None:
         funciones.limpiar_consola()
         self.crear_objetos()
+
+       # for i in self.peliculas:
+         #   print(i.titulo)
+         #   print(i.planetas)
+          #  print()
+
         self.start()
 
 
@@ -92,7 +98,14 @@ class App:
         input("Ingrese cualquier tecla para volver al menu anterior: ") 
 
     def mostrar_lista_planetas(self, planetas:list):
-        pass
+        funciones.limpiar_consola()
+        for i in self.planetas:
+            i.informacion()
+            print("--------------------------------------------------")
+
+        print(f"En total hay {len(self.planetas)} planetas")
+        print()
+        input("Ingrese cualquier tecla para volver al menu anterior: ")
 
     def buscar_personaje(self,nombre_o_id, personajes:list):
         #revisar si es necesaria la busqueda por id o si solo se necesita por nombre
@@ -100,8 +113,12 @@ class App:
         pass
 
     def crear_objetos(self):
+        #Los metodos para crear objetos se deben llamar en este orden:
+            #1. crear_peliculas()
+            #2. crear_planetas()
+            #3. crear_personajes()
+            #4. crear_especies()
         self.peliculas = creador_de_objetos.crear_peliculas()
-        self.especies = creador_de_objetos.crear_especies()
+        self.planetas = creador_de_objetos.crear_planetas(self.peliculas, [])
+        self.especies = creador_de_objetos.crear_especies(self.peliculas, self.planetas)
 
-#Este llamado esta aqui para probar el codigo, luego este llamado se debe hacer desde main.py     
-#app = App()

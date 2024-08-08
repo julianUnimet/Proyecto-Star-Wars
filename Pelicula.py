@@ -47,10 +47,3 @@ class Pelicula:
         
         return opening
                 
-
-            
-#Esto es para pruebas, luego se debe eliminar
-#opening = "Luke Skywalker has returned to\r\nhis home planet of Tatooine in\r\nan attempt to rescue his\r\nfriend Han Solo from the\r\nclutches of the vile gangster\r\nJabba the Hutt.\r\n\r\nLittle does Luke know that the\r\nGALACTIC EMPIRE has secretly\r\nbegun construction on a new\r\narmored space station even\r\nmore powerful than the first\r\ndreaded Death Star.\r\n\r\nWhen completed, this ultimate\r\nweapon will spell certain doom\r\nfor the small band of rebels\r\nstruggling to restore freedom\r\nto the galaxy..."
-#peli = Pelicula("A New Hope", 4, "1977-05-25", opening,"George Lucas", [], [], [])
-
-#peli.informacion()
