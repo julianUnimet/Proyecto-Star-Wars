@@ -1,7 +1,7 @@
+from MedioTransporte import MedioTransporte
+class Nave(MedioTransporte):
 
-class Nave():
-
-    def __init__(self, id:str, nombre:str, longitud_nave:str, capacidad_carga:str, clasificacion_hiperimpulsor:str, mglt:str, costo:str, pilotos:list) -> None:
+    def __init__(self, id:str, nombre:str, longitud_nave:str, capacidad_carga:str, costo:str, pilotos:list, clasificacion_hiperimpulsor:str, mglt:str,) -> None:
         """Creacion del objeto nave
 
         Args:
@@ -14,25 +14,17 @@ class Nave():
             costo (str): costo de la nave
             pilotos (list): lista de ids de los personajes que utilizan la nave
         """
-        self.id = id
-        self.nombre = nombre
-        self.longitud_nave = longitud_nave
-        self.capacidad_carga = capacidad_carga
+        super().__init__(id, nombre, longitud_nave, capacidad_carga, costo, pilotos)
         self.clasificacion_hiperimpulsor = clasificacion_hiperimpulsor
         self.mglt = mglt
-        self.costo = costo
-        self.pilotos = pilotos
+        
 
     def informacion(self):
         """Imprime en pantalla la informacion de la nave
         """
-        print(f"ID: {self.id}")
-        print(f"Nombre de la nave: {self.nombre}")
-        print(f"Longitud de la nave: {self.longitud_nave}")
-        print(f"Capacidad de carga: {self.capacidad_carga}")
+        super().informacion("nave")
         print(f"Clasificacion del hiperimpulsor: {self.clasificacion_hiperimpulsor}")
         print(f"MGLT: {self.mglt}")
-        print(f"Costo de la nave: {self.costo}")
         print()
         print("Pilotos de la nave:")
         for piloto in self.pilotos:

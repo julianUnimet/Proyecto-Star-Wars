@@ -12,7 +12,7 @@ class Especie:
             lengua_materna (str): lengua materna de la especie
             planeta_origen (str): id del planeta de origen de la especie
             planetas (list): lista de todos los planeta
-            pesonajes_de_esta_especie (list): lista de todos los personajes
+            pesonajes_de_esta_especie (list): lista de ids de los personajes
             peliculas (list): lista de todas las peliculas
         """
 
@@ -76,3 +76,20 @@ class Especie:
         for planeta in planetas:
             if planeta_id == planeta.id:
                 return planeta
+
+    def referenciar_personajes(self, personajes:list):
+        """Este metodo compara las ids de los personajes de esta especie con el id de cada personaje en personajes y agrega el personaje que contiene el indice del planeta. Llamar despues de crear los personajes
+
+        Args:
+            personajes (list): lista de objetos personajes
+        Returns:
+            list: lista de objetos personaje originarios de este planeta
+        """
+
+        personajes_de_esta_especie = []
+
+        for personaje in personajes:
+            if personaje.id in self.personajes_de_esta_especie:
+                personajes_de_esta_especie.append(personaje)
+
+        self.personajes_de_esta_especie = personajes_de_esta_especie

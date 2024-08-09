@@ -4,16 +4,8 @@ import creador_de_objetos
 class App:
     def __init__(self) -> None:
         funciones.limpiar_consola()
-        self.crear_objetos()
-
-       # for i in self.peliculas:
-         #   print(i.titulo)
-         #   print(i.planetas)
-          #  print()
-
-        self.mostrar_lista_objetos(self.naves, "naves")
-
-        #self.start()
+        self.crear_objetos()    
+        self.start()
 
 
     def start(self):
@@ -39,7 +31,8 @@ class App:
             elif opcion == 3:
                 self.mostrar_lista_objetos(self.planetas, "planetas")
             elif opcion == 4:
-                self.buscar_personaje("")                
+                #self.buscar_personaje("")  
+                self.mostrar_lista_objetos(self.personajes, "personajes")                 
 
 
 
@@ -108,12 +101,30 @@ class App:
 
     def crear_objetos(self):
         #Los metodos para crear objetos se deben llamar en este orden:
-            #1. crear_peliculas()
-            #2. crear_planetas()
-            #3. crear_personajes()
-            #4. crear_especies()
+            #crear_peliculas()
+            #crear_planetas()
+            #crear_naves()
+            #crear_vehiculos()                        
+            #crear_especies()
+            #crear_personajes()
+            #Referenciar personajes en planetas
+            #Referenciar personajes en especies
+        print("Creando objetos peliculas")
         self.peliculas = creador_de_objetos.crear_peliculas()
+        print("Creando objetos planetas")
         self.planetas = creador_de_objetos.crear_planetas(self.peliculas, [])
-        self.especies = creador_de_objetos.crear_especies(self.peliculas, self.planetas)
+        print("Creando objetos naves")
         self.naves = creador_de_objetos.crear_naves()
+        print("Creando objetos vehiculos")
+        self.vehiculos = creador_de_objetos.crear_vehiculos()
+        print("Creando objetos especies")
+        self.especies = creador_de_objetos.crear_especies(self.peliculas, self.planetas)
+        print("Creando objetos personajes")
+        self.personajes = creador_de_objetos.crear_personajes(self.planetas, self.peliculas, self.especies, self.naves, self.vehiculos)
 
+        #Referenciar objetos personajes en planetas
+        for planeta in self.planetas:
+            planeta.referenciar_personajes(self.personajes)
+        
+
+        
