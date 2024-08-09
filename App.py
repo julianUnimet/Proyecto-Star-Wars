@@ -11,7 +11,9 @@ class App:
          #   print(i.planetas)
           #  print()
 
-        self.start()
+        self.mostrar_lista_objetos(self.naves, "naves")
+
+        #self.start()
 
 
     def start(self):
@@ -31,13 +33,13 @@ class App:
             if opcion == 0:
                 break
             elif opcion == 1:
-                self.mostrar_lista_peliculas([])
+                self.mostrar_lista_objetos(self.peliculas, "peliculas")
             elif opcion == 2:
-                self.mostrar_lista_seres_vivos([])
+                self.mostrar_lista_objetos(self.especies, "seres vivos")
             elif opcion == 3:
-                self.mostrar_lista_planetas([])
+                self.mostrar_lista_objetos(self.planetas, "planetas")
             elif opcion == 4:
-                self.buscar_personaje("")
+                self.buscar_personaje("")                
 
 
 
@@ -78,35 +80,27 @@ class App:
             print(f"Ingrese una opcion valida. Es decir, cualquiera de los siguiente numeros: {opciones}")
             print()
             return 999
+        
+    def mostrar_lista_objetos(self, objetos:list, que_objeto_es:str):
+        """Imprime en pantalla la informacion de un objeto
 
-    def mostrar_lista_peliculas(self, peliculas:list):
+        Args:
+            objeto (list): Lista de objetos de tipo Planeta, Especie, Pelicula o Personaje
+            que_objeto_es (str): Nombre del objeto que se esta mostrando.
+        """
         funciones.limpiar_consola()
-        for i in self.peliculas:
-            i.informacion()
-            print("--------------------------------------------------")
+        print(f"LISTA DE {que_objeto_es.upper()}")
+        print()
 
-        input("Ingrese cualquier tecla para volver al menu anterior: ") 
-
-    def mostrar_lista_seres_vivos(self, seres_vivos:list):
-        funciones.limpiar_consola()
-        for i in self.especies:
+        for i in objetos:
             i.informacion()
             print("--------------------------------------------------")
         
-        print(f"En total hay {len(self.especies)} especies")
-        print()
-        input("Ingrese cualquier tecla para volver al menu anterior: ") 
-
-    def mostrar_lista_planetas(self, planetas:list):
-        funciones.limpiar_consola()
-        for i in self.planetas:
-            i.informacion()
-            print("--------------------------------------------------")
-
-        print(f"En total hay {len(self.planetas)} planetas")
+        print(f"En total hay {len(objetos)} {que_objeto_es}")
         print()
         input("Ingrese cualquier tecla para volver al menu anterior: ")
 
+    
     def buscar_personaje(self,nombre_o_id, personajes:list):
         #revisar si es necesaria la busqueda por id o si solo se necesita por nombre
         #se puede hacer una busqueda de las dos formas revisando si el parametro es un entero o no
@@ -121,4 +115,5 @@ class App:
         self.peliculas = creador_de_objetos.crear_peliculas()
         self.planetas = creador_de_objetos.crear_planetas(self.peliculas, [])
         self.especies = creador_de_objetos.crear_especies(self.peliculas, self.planetas)
+        self.naves = creador_de_objetos.crear_naves()
 

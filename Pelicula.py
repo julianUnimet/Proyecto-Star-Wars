@@ -1,6 +1,18 @@
 class Pelicula:
-    #Agregar documentacion cuando ya se establescan todos los paramteros necesarios
+    
     def __init__(self, titulo:str, episodio:int, fecha_lanzamiento:str, opening_crawl:str, director:str, especies:list, personajes:list, planetas:list) -> None:
+        """Creacion del objeto pelicula
+
+        Args:
+            titulo (str): titulo de la pelicula
+            episodio (int): episodio de la pelicula
+            fecha_lanzamiento (str): fecha de lanzamiento de la pelicula
+            opening_crawl (str): opening crawl de la pelicula
+            director (str): director de la pelicula
+            especies (list): lista de ids de las especies que aparecen en la pelicula
+            personajes (list): lista de ids de los personajes que aparecen en la pelicula
+            planetas (list): lista de ids de los planetas que aparecen en la pelicula
+        """
         self.titulo = titulo
         self.episodio = episodio
         self.fecha_lanzamiento = fecha_lanzamiento

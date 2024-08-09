@@ -1,6 +1,7 @@
 from Pelicula import Pelicula
 from Especie import Especie
 from Planeta import Planeta
+from Nave import Nave
 import manejador_API
 
 def crear_peliculas():
@@ -87,10 +88,33 @@ def crear_planetas(peliculas:list, personajes:list):
 
     return planetasOBJ
 
+def crear_naves():
+    """Crea los objetos de tipo nave
+
+    Returns:
+        list: Lista de objetos de tipo nave
+    """
+    navesOBJ = [] #Lista de objetos
+
+    info_naves = manejador_API.obtener_informacion_de_varias_paginas("https://www.swapi.tech/api/starships")
+
+    for info_nave in info_naves:
+        id = info_nave["result"]["uid"]
+
+        propiedades = info_nave["result"]["properties"]
+        nombre = propiedades["name"]
+        longitud_nave = propiedades["length"]
+        capacidad_carga = propiedades["cargo_capacity"]
+        clasificacion_hiperimpulsor = propiedades["hyperdrive_rating"]
+        mglt = propiedades["MGLT"]
+        costo = propiedades["cost_in_credits"]
+        pilotos = extractor_id_desde_url(propiedades["pilots"])
 
 
+        navesOBJ.append(Nave(id, nombre, longitud_nave, capacidad_carga, costo, pilotos, clasificacion_hiperimpulsor, mglt))
 
 
+    return navesOBJ
 
 
 def extractor_id_desde_url(lista_urls:list):

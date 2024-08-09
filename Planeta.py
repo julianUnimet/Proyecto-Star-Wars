@@ -1,6 +1,18 @@
 class Planeta:
     
     def __init__(self, id:str, nombre:str, periodo_orbita:str, periodo_rotacion:str, cantidad_habitantes:str, tipo_clima:str, peliculas:list, personajes:list) -> None:
+        """Se crea el objeto planeta
+
+        Args:
+            id (str): id del planeta
+            nombre (str): nombre del planeta
+            periodo_orbita (str): periodo de orbita del planeta
+            periodo_rotacion (str): periodo de rotacion del planeta
+            cantidad_habitantes (str): cantidad de habitantes del planeta
+            tipo_clima (str): tipo de clima del planeta
+            peliculas (list): lista de todas las peliculas
+            personajes (list): lista de todos los personajes
+        """
         self.id = id
         self.nombre = nombre
         self.periodo_orbita = periodo_orbita

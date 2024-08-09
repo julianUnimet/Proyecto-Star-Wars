@@ -2,6 +2,20 @@
 class Especie:
 
     def __init__(self,id:str, nombre:str, altura:str, clasificacion:str, lengua_materna:str, planeta_origen:str, planetas:list, pesonajes_de_esta_especie:list, peliculas:list) -> None:
+        """Creacion del objeto especie
+
+        Args:
+            id (str): id de la especie
+            nombre (str): nombre de la especie
+            altura (str): altura promedio de la especie
+            clasificacion (str): clasificacion de la especie
+            lengua_materna (str): lengua materna de la especie
+            planeta_origen (str): id del planeta de origen de la especie
+            planetas (list): lista de todos los planeta
+            pesonajes_de_esta_especie (list): lista de todos los personajes
+            peliculas (list): lista de todas las peliculas
+        """
+
         self.id = id
         self.nombre = nombre 
         self.altura = altura
