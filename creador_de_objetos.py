@@ -61,7 +61,7 @@ def crear_especies(peliculas:list, planetas:list):
 
     return especiesOBJ
 
-def crear_planetas(peliculas:list, personajes:list):
+def crear_planetas(peliculas:list):
     """Crea los objetos tipo Planeta
 
     Args:
@@ -86,7 +86,7 @@ def crear_planetas(peliculas:list, personajes:list):
         cantidad_habitantes = propiedades["population"]
         tipo_clima = propiedades["climate"]
 
-        planetasOBJ.append(Planeta(id, nombre, perdiodo_orbita, periodo_rotacion, cantidad_habitantes, tipo_clima, peliculas, personajes))
+        planetasOBJ.append(Planeta(id, nombre, perdiodo_orbita, periodo_rotacion, cantidad_habitantes, tipo_clima, peliculas))
 
     return planetasOBJ
 

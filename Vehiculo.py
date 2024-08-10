@@ -19,3 +19,7 @@ class Vehiculo(MedioTransporte):
         
     def informacion(self):
         super().informacion("vehiculo")
+        print("Pilotos del vehiculo:")
+        for piloto in self.pilotos:
+            print(f"\t{piloto}")
+        print()

@@ -1,6 +1,6 @@
 class Planeta:
     
-    def __init__(self, id:str, nombre:str, periodo_orbita:str, periodo_rotacion:str, cantidad_habitantes:str, tipo_clima:str, peliculas:list, personajes:list) -> None:
+    def __init__(self, id:str, nombre:str, periodo_orbita:str, periodo_rotacion:str, cantidad_habitantes:str, tipo_clima:str, peliculas:list) -> None:
         """Se crea el objeto planeta
 
         Args:
@@ -20,8 +20,7 @@ class Planeta:
         self.cantidad_habitantes = cantidad_habitantes
         self.tipo_clima = tipo_clima
         self.peliculas = self.referenciar_peliculas(peliculas)
-        self.personajes = personajes
-
+        self.personajes = []
 
     def informacion(self):
         """Imprime en pantalla la informacion del planeta
@@ -72,7 +71,7 @@ class Planeta:
         personajes_de_este_planeta = []
 
         for personaje in personajes:
-            if personaje.id in self.personajes:
+            if self.id == personaje.planeta_origen_id:
                 personajes_de_este_planeta.append(personaje)
 
         self.personajes = personajes_de_este_planeta

@@ -31,8 +31,8 @@ class App:
             elif opcion == 3:
                 self.mostrar_lista_objetos(self.planetas, "planetas")
             elif opcion == 4:
-                #self.buscar_personaje("")  
-                self.mostrar_lista_objetos(self.personajes, "personajes")                 
+                self.buscar_personaje(self.personajes)  
+
 
 
 
@@ -94,10 +94,45 @@ class App:
         input("Ingrese cualquier tecla para volver al menu anterior: ")
 
     
-    def buscar_personaje(self,nombre_o_id, personajes:list):
-        #revisar si es necesaria la busqueda por id o si solo se necesita por nombre
-        #se puede hacer una busqueda de las dos formas revisando si el parametro es un entero o no
-        pass
+    def buscar_personaje(self, personajes:list):
+        """Busca personajes
+
+        Args:
+            personajes (list): lista de todos los objetos personajes
+        """
+        funciones.limpiar_consola()
+        
+        print("BUSCAR PERSONAJE")
+        print()
+        nombre = input("Ingrese el nombre o parte del nombre del personaje: ")
+        personajes = self.buscar_por_nombre(nombre, personajes)
+        if len(personajes) == 0 :
+            print("No se encontro ningun personaje con ese nombre")
+        else:
+            for personaje in personajes:
+                personaje.informacion()
+                print("--------------------------------------------------")
+
+        input("Ingrese cualquier tecla para volver al menu anterior: ")
+            
+
+    def buscar_por_nombre(self, nombre:str, personajes:list):
+        """Busca un personaje por nombre en la lista de personajes
+
+        Args:
+            nombre (str): Nombre del personaje
+            personajes (list): Lista de objetos de tipo Personaje
+
+        Returns:
+            list[Personajes]: lista de objetos de tipo personaje que coinciden con el nombre o parte de el
+        """
+        personajes_encontrados = []
+
+        for personaje in personajes:
+            if nombre.lower() in personaje.nombre.lower():
+                personajes_encontrados.append(personaje)
+        
+        return personajes_encontrados
 
     def crear_objetos(self):
         #Los metodos para crear objetos se deben llamar en este orden:
@@ -112,7 +147,7 @@ class App:
         print("Creando objetos peliculas")
         self.peliculas = creador_de_objetos.crear_peliculas()
         print("Creando objetos planetas")
-        self.planetas = creador_de_objetos.crear_planetas(self.peliculas, [])
+        self.planetas = creador_de_objetos.crear_planetas(self.peliculas)
         print("Creando objetos naves")
         self.naves = creador_de_objetos.crear_naves()
         print("Creando objetos vehiculos")
@@ -125,6 +160,10 @@ class App:
         #Referenciar objetos personajes en planetas
         for planeta in self.planetas:
             planeta.referenciar_personajes(self.personajes)
+
+        #Referenciar objetos personajes en especies
+        for especie in self.especies:
+            especie.referenciar_personajes(self.personajes)
         
 
         

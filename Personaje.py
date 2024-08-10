@@ -19,6 +19,7 @@ class Personaje:
         self.id = id
         self.nombre = nombre
         self.planeta_origen = self.referenciar_planeta(id_planeta_origen, planetas)
+        self.planeta_origen_id = id_planeta_origen
         self.peliculas = self.referenciar_peliculas(peliculas)
         self.genero = genero
         self.especie = self.referenciar_especie(especies)
@@ -32,7 +33,10 @@ class Personaje:
         print(f"Nombre del personaje: {self.nombre}")
         print(f"Planeta de origen: {self.planeta_origen.nombre}")
         print(f"Genero: {self.genero}")
-        print(f"Especie: {self.especie.nombre}")
+        if self.especie == None:
+            print("Especie: Desconocida")
+        else:
+            print(f"Especie: {self.especie.nombre}")
         print()
         print(f"Peliculas en las que aparece:")
         for pelicula in self.peliculas:
@@ -84,8 +88,10 @@ class Personaje:
         for especie in especies:
             if self.id in especie.personajes_de_esta_especie:
                 return especie
+            
+        return None
 
-    def referenciar_medio_transporte(self, medio_transporte:list):
+    def referenciar_medio_transporte(self, medios_transporte:list):
         """Este metodo referencia los objetos medios de transporte (nave, vehiculo) en funcion de los ids de los pilotos
 
         Args:
@@ -96,7 +102,7 @@ class Personaje:
         """
         medios_transporte_pilota = []
 
-        for medio_transporte in medios_transporte_pilota:
+        for medio_transporte in medios_transporte:
             if self.id in medio_transporte.pilotos:
                 medios_transporte_pilota.append(medio_transporte)
         
