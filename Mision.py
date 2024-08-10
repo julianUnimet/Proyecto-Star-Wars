@@ -58,7 +58,7 @@ def crear_mision(planetas, naves, armas, integrantes, usuario):
         print(f"{i + 1}. {planeta.nombre}")
     planeta_index = int(input("Ingrese el número del planeta seleccionado: ")) - 1
     planeta_destino = planetas[planeta_index]
-    
+    '''
     # Selección de la nave
     print("Seleccione la nave a utilizar:")
     for i, nave in enumerate(naves):
@@ -73,7 +73,10 @@ def crear_mision(planetas, naves, armas, integrantes, usuario):
         print(f"{i + 1}. {arma.nombre}")
     while len(armas_seleccionadas) < 7:
         arma_index = int(input("Ingrese el número del arma seleccionada: ")) - 1
-        if arma_index == -1:
+        if arma_index < 0 :
+            break
+        if len(armas_seleccionadas) >= 7:
+            print("Ha alcanzado el numero maximo de armas a seleccionar")
             break
         armas_seleccionadas.append(armas[arma_index])
     
@@ -86,10 +89,14 @@ def crear_mision(planetas, naves, armas, integrantes, usuario):
         integrante_index = int(input("Ingrese el número del integrante seleccionado: ")) - 1
         if integrante_index == -1:
             break
+        if len(integrantes_seleccionados) >= 7:
+            print("Ha alcanzado el numero maximo de armas a seleccionar")
+            break
         integrantes_seleccionados.append(integrantes[integrante_index])
-    
+    '''
     # Crear la misión
-    mision = Mision(nombre, planeta_destino, nave, armas_seleccionadas, integrantes_seleccionados)
+    mision = Mision(nombre, planeta_destino)
+    #mision = Mision(nombre, planeta_destino, nave, armas_seleccionadas, integrantes_seleccionados)
     misiones.append(mision)
     guardar_misiones(misiones, usuario)
     return mision
