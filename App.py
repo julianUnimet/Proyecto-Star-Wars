@@ -4,13 +4,7 @@ import creador_de_objetos
 class App:
     def __init__(self) -> None:
         funciones.limpiar_consola()
-        self.crear_objetos()
-
-       # for i in self.peliculas:
-         #   print(i.titulo)
-         #   print(i.planetas)
-          #  print()
-
+        self.crear_objetos()    
         self.start()
 
 
@@ -31,13 +25,14 @@ class App:
             if opcion == 0:
                 break
             elif opcion == 1:
-                self.mostrar_lista_peliculas([])
+                self.mostrar_lista_objetos(self.peliculas, "peliculas")
             elif opcion == 2:
-                self.mostrar_lista_seres_vivos([])
+                self.mostrar_lista_objetos(self.especies, "seres vivos")
             elif opcion == 3:
-                self.mostrar_lista_planetas([])
+                self.mostrar_lista_objetos(self.planetas, "planetas")
             elif opcion == 4:
-                self.buscar_personaje("")
+                self.buscar_personaje(self.personajes)  
+
 
 
 
@@ -78,47 +73,97 @@ class App:
             print(f"Ingrese una opcion valida. Es decir, cualquiera de los siguiente numeros: {opciones}")
             print()
             return 999
+        
+    def mostrar_lista_objetos(self, objetos:list, que_objeto_es:str):
+        """Imprime en pantalla la informacion de un objeto
 
-    def mostrar_lista_peliculas(self, peliculas:list):
+        Args:
+            objeto (list): Lista de objetos de tipo Planeta, Especie, Pelicula o Personaje
+            que_objeto_es (str): Nombre del objeto que se esta mostrando.
+        """
         funciones.limpiar_consola()
-        for i in self.peliculas:
-            i.informacion()
-            print("--------------------------------------------------")
+        print(f"LISTA DE {que_objeto_es.upper()}")
+        print()
 
-        input("Ingrese cualquier tecla para volver al menu anterior: ") 
-
-    def mostrar_lista_seres_vivos(self, seres_vivos:list):
-        funciones.limpiar_consola()
-        for i in self.especies:
+        for i in objetos:
             i.informacion()
             print("--------------------------------------------------")
         
-        print(f"En total hay {len(self.especies)} especies")
-        print()
-        input("Ingrese cualquier tecla para volver al menu anterior: ") 
-
-    def mostrar_lista_planetas(self, planetas:list):
-        funciones.limpiar_consola()
-        for i in self.planetas:
-            i.informacion()
-            print("--------------------------------------------------")
-
-        print(f"En total hay {len(self.planetas)} planetas")
+        print(f"En total hay {len(objetos)} {que_objeto_es}")
         print()
         input("Ingrese cualquier tecla para volver al menu anterior: ")
 
-    def buscar_personaje(self,nombre_o_id, personajes:list):
-        #revisar si es necesaria la busqueda por id o si solo se necesita por nombre
-        #se puede hacer una busqueda de las dos formas revisando si el parametro es un entero o no
-        pass
+    
+    def buscar_personaje(self, personajes:list):
+        """Busca personajes
+
+        Args:
+            personajes (list): lista de todos los objetos personajes
+        """
+        funciones.limpiar_consola()
+        
+        print("BUSCAR PERSONAJE")
+        print()
+        nombre = input("Ingrese el nombre o parte del nombre del personaje: ")
+        personajes = self.buscar_por_nombre(nombre, personajes)
+        if len(personajes) == 0 :
+            print("No se encontro ningun personaje con ese nombre")
+        else:
+            for personaje in personajes:
+                personaje.informacion()
+                print("--------------------------------------------------")
+
+        input("Ingrese cualquier tecla para volver al menu anterior: ")
+            
+
+    def buscar_por_nombre(self, nombre:str, personajes:list):
+        """Busca un personaje por nombre en la lista de personajes
+
+        Args:
+            nombre (str): Nombre del personaje
+            personajes (list): Lista de objetos de tipo Personaje
+
+        Returns:
+            list[Personajes]: lista de objetos de tipo personaje que coinciden con el nombre o parte de el
+        """
+        personajes_encontrados = []
+
+        for personaje in personajes:
+            if nombre.lower() in personaje.nombre.lower():
+                personajes_encontrados.append(personaje)
+        
+        return personajes_encontrados
 
     def crear_objetos(self):
         #Los metodos para crear objetos se deben llamar en este orden:
-            #1. crear_peliculas()
-            #2. crear_planetas()
-            #3. crear_personajes()
-            #4. crear_especies()
+            #crear_peliculas()
+            #crear_planetas()
+            #crear_naves()
+            #crear_vehiculos()                        
+            #crear_especies()
+            #crear_personajes()
+            #Referenciar personajes en planetas
+            #Referenciar personajes en especies
+        print("Creando objetos peliculas")
         self.peliculas = creador_de_objetos.crear_peliculas()
-        self.planetas = creador_de_objetos.crear_planetas(self.peliculas, [])
+        print("Creando objetos planetas")
+        self.planetas = creador_de_objetos.crear_planetas(self.peliculas)
+        print("Creando objetos naves")
+        self.naves = creador_de_objetos.crear_naves()
+        print("Creando objetos vehiculos")
+        self.vehiculos = creador_de_objetos.crear_vehiculos()
+        print("Creando objetos especies")
         self.especies = creador_de_objetos.crear_especies(self.peliculas, self.planetas)
+        print("Creando objetos personajes")
+        self.personajes = creador_de_objetos.crear_personajes(self.planetas, self.peliculas, self.especies, self.naves, self.vehiculos)
 
+        #Referenciar objetos personajes en planetas
+        for planeta in self.planetas:
+            planeta.referenciar_personajes(self.personajes)
+
+        #Referenciar objetos personajes en especies
+        for especie in self.especies:
+            especie.referenciar_personajes(self.personajes)
+        
+
+        

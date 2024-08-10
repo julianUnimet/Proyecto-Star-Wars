@@ -2,6 +2,20 @@
 class Especie:
 
     def __init__(self,id:str, nombre:str, altura:str, clasificacion:str, lengua_materna:str, planeta_origen:str, planetas:list, pesonajes_de_esta_especie:list, peliculas:list) -> None:
+        """Creacion del objeto especie
+
+        Args:
+            id (str): id de la especie
+            nombre (str): nombre de la especie
+            altura (str): altura promedio de la especie
+            clasificacion (str): clasificacion de la especie
+            lengua_materna (str): lengua materna de la especie
+            planeta_origen (str): id del planeta de origen de la especie
+            planetas (list): lista de todos los planeta
+            pesonajes_de_esta_especie (list): lista de ids de los personajes
+            peliculas (list): lista de todas las peliculas
+        """
+
         self.id = id
         self.nombre = nombre 
         self.altura = altura
@@ -62,3 +76,20 @@ class Especie:
         for planeta in planetas:
             if planeta_id == planeta.id:
                 return planeta
+
+    def referenciar_personajes(self, personajes:list):
+        """Este metodo compara las ids de los personajes de esta especie con el id de cada personaje en personajes y agrega el personaje que contiene el indice del planeta. Llamar despues de crear los personajes
+
+        Args:
+            personajes (list): lista de objetos personajes
+        Returns:
+            list: lista de objetos personaje originarios de este planeta
+        """
+
+        personajes_de_esta_especie = []
+
+        for personaje in personajes:
+            if personaje.id in self.personajes_de_esta_especie:
+                personajes_de_esta_especie.append(personaje)
+
+        self.personajes_de_esta_especie = personajes_de_esta_especie

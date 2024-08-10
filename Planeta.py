@@ -1,6 +1,18 @@
 class Planeta:
     
-    def __init__(self, id:str, nombre:str, periodo_orbita:str, periodo_rotacion:str, cantidad_habitantes:str, tipo_clima:str, peliculas:list, personajes:list) -> None:
+    def __init__(self, id:str, nombre:str, periodo_orbita:str, periodo_rotacion:str, cantidad_habitantes:str, tipo_clima:str, peliculas:list) -> None:
+        """Se crea el objeto planeta
+
+        Args:
+            id (str): id del planeta
+            nombre (str): nombre del planeta
+            periodo_orbita (str): periodo de orbita del planeta
+            periodo_rotacion (str): periodo de rotacion del planeta
+            cantidad_habitantes (str): cantidad de habitantes del planeta
+            tipo_clima (str): tipo de clima del planeta
+            peliculas (list): lista de todas las peliculas
+            personajes (list): lista de todos los personajes
+        """
         self.id = id
         self.nombre = nombre
         self.periodo_orbita = periodo_orbita
@@ -8,8 +20,7 @@ class Planeta:
         self.cantidad_habitantes = cantidad_habitantes
         self.tipo_clima = tipo_clima
         self.peliculas = self.referenciar_peliculas(peliculas)
-        self.personajes = self.referenciar_personajes(personajes)
-
+        self.personajes = []
 
     def informacion(self):
         """Imprime en pantalla la informacion del planeta
@@ -49,10 +60,10 @@ class Planeta:
         return peliculas_aparece
 
     def referenciar_personajes(self, personajes:list):
-        """Este metodo compara el id del planeta con el id del plante de origne de cada personaje en personajes y agrega el personaje que contiene el indice del planta
+        """Este metodo compara el id del planeta con el id del planeta de origen de cada personaje en personajes y agrega el personaje que contiene el indice del planeta. Llamar despues de crear los personajes
 
         Args:
-            personajes (list): lista de personajes
+            personajes (list): lista de objetos personajes
         Returns:
             list: lista de objetos personaje originarios de este planeta
         """
@@ -60,7 +71,7 @@ class Planeta:
         personajes_de_este_planeta = []
 
         for personaje in personajes:
-            if self.id == personaje.planeta_origen:
+            if self.id == personaje.planeta_origen_id:
                 personajes_de_este_planeta.append(personaje)
 
-        return personajes_de_este_planeta
+        self.personajes = personajes_de_este_planeta

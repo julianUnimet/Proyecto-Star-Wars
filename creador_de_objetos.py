@@ -1,6 +1,9 @@
 from Pelicula import Pelicula
 from Especie import Especie
 from Planeta import Planeta
+from Nave import Nave
+from Vehiculo import Vehiculo
+from Personaje import Personaje
 import manejador_API
 
 def crear_peliculas():
@@ -58,7 +61,7 @@ def crear_especies(peliculas:list, planetas:list):
 
     return especiesOBJ
 
-def crear_planetas(peliculas:list, personajes:list):
+def crear_planetas(peliculas:list):
     """Crea los objetos tipo Planeta
 
     Args:
@@ -83,15 +86,90 @@ def crear_planetas(peliculas:list, personajes:list):
         cantidad_habitantes = propiedades["population"]
         tipo_clima = propiedades["climate"]
 
-        planetasOBJ.append(Planeta(id, nombre, perdiodo_orbita, periodo_rotacion, cantidad_habitantes, tipo_clima, peliculas, personajes))
+        planetasOBJ.append(Planeta(id, nombre, perdiodo_orbita, periodo_rotacion, cantidad_habitantes, tipo_clima, peliculas))
 
     return planetasOBJ
 
+def crear_naves():
+    """Crea los objetos de tipo nave
+
+    Returns:
+        list: Lista de objetos de tipo nave
+    """
+    navesOBJ = [] #Lista de objetos
+
+    info_naves = manejador_API.obtener_informacion_de_varias_paginas("https://www.swapi.tech/api/starships")
+
+    for info_nave in info_naves:
+        id = info_nave["result"]["uid"]
+
+        propiedades = info_nave["result"]["properties"]
+        nombre = propiedades["name"]
+        longitud_nave = propiedades["length"]
+        capacidad_carga = propiedades["cargo_capacity"]
+        clasificacion_hiperimpulsor = propiedades["hyperdrive_rating"]
+        mglt = propiedades["MGLT"]
+        costo = propiedades["cost_in_credits"]
+        pilotos = extractor_id_desde_url(propiedades["pilots"])
 
 
+        navesOBJ.append(Nave(id, nombre, longitud_nave, capacidad_carga, costo, pilotos, clasificacion_hiperimpulsor, mglt))
 
+    return navesOBJ
 
+def crear_vehiculos():
+    """Crea los objetos de tipo vehiculos
 
+    Returns:
+        list: Lista de objetos de tipo vehiculos
+    """
+    vehiculosOBJ = [] #Lista de objetos
+
+    info_vehiculos = manejador_API.obtener_informacion_de_varias_paginas("https://www.swapi.tech/api/vehicles")
+
+    for info_vehiculo in info_vehiculos:
+        id = info_vehiculo["result"]["uid"]
+
+        propiedades = info_vehiculo["result"]["properties"]
+        nombre = propiedades["name"]
+        longitud_nave = propiedades["length"]
+        capacidad_carga = propiedades["cargo_capacity"]
+        costo = propiedades["cost_in_credits"]
+        pilotos = extractor_id_desde_url(propiedades["pilots"])
+
+        vehiculosOBJ.append(Vehiculo(id, nombre, longitud_nave, capacidad_carga, costo, pilotos))
+
+    return vehiculosOBJ
+
+def crear_personajes(planetas:list, peliculas:list, especies:list, naves:list, vehiculos:list):
+    """Crea los objetos de tipo personaje
+
+    Args:
+        planetas (list): Lista de objetos de tipo planeta
+        peliculas (list): Lista de objetos de tipo pelicula
+        especies (list): lista de objetos de tipo especie
+        naves (list): lista de objetos de tipo nave
+        vehiculos (list): lista de objetos de tipo vehiculo
+
+    Returns:
+        list: lista de objetos de tipo personaje
+    """
+
+    personajesOBJ = [] #Lista de objetos
+
+    info_personajes = manejador_API.obtener_informacion_de_varias_paginas("https://www.swapi.tech/api/people")
+
+    for info_personaje in info_personajes:
+        id = info_personaje["result"]["uid"]
+
+        propiedades = info_personaje["result"]["properties"]
+        nombre = propiedades["name"]
+        id_planeta_origen = extractor_id_desde_url([propiedades["homeworld"]])[0]
+        genero = propiedades["gender"]
+
+        personajesOBJ.append(Personaje(id, nombre, id_planeta_origen, planetas, peliculas, genero, especies, naves, vehiculos))
+    
+    return personajesOBJ
 
 def extractor_id_desde_url(lista_urls:list):
     """Esta funcion extrae el id de los url aprovechando que el id esta al final del url. Solo funciona si los unicos valores numericos que aparecen son los del id
