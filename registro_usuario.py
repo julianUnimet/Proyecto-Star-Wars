@@ -16,7 +16,10 @@ def registrar_usuario(nombre_usuario, clave):
     if os.path.exists(archivo_usuarios):
         with open(archivo_usuarios, 'r') as file:
             for linea in file:
-                usuario, _ = linea.strip().split(',')
+                partes = linea.strip().split(',')
+                if len(partes) != 2:
+                    continue  # Ignorar líneas que no tienen el formato esperado
+                usuario, _ = partes
                 if usuario == nombre_usuario:
                     print("El usuario ya existe.")
                     return False
@@ -29,6 +32,7 @@ def registrar_usuario(nombre_usuario, clave):
 
     print("Usuario registrado exitosamente.")
     return True
+
 
 def validar_usuario(nombre_usuario, clave):
     """Valida un usuario con su clave.

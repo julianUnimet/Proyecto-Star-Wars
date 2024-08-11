@@ -55,3 +55,19 @@ class Pelicula:
         
         return opening
                 
+    def to_dict(self):
+        """Convierte el objeto Pelicula en un diccionario para facilitar la serialización.
+
+        Returns:
+            dict: Un diccionario con los datos de la película.
+        """
+        return {
+            'titulo': self.titulo,
+            'episodio': self.episodio,
+            'fecha_lanzamiento': self.fecha_lanzamiento,
+            'opening_crawl': self.opening_crawl,
+            'director': self.director,
+            'especies': self.especies,  # Suponiendo que es una lista de IDs o strings
+            'personajes': self.personajes,  # Suponiendo que es una lista de IDs o strings
+            'planetas': self.planetas  # Suponiendo que es una lista de IDs o strings
+        }
