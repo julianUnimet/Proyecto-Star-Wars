@@ -75,3 +75,15 @@ class Planeta:
                 personajes_de_este_planeta.append(personaje)
 
         self.personajes = personajes_de_este_planeta
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'nombre': self.nombre,
+            'periodo_orbita': self.periodo_orbita,
+            'periodo_rotacion': self.periodo_rotacion,
+            'cantidad_habitantes': self.cantidad_habitantes,
+            'tipo_clima': self.tipo_clima,
+            'peliculas': [pelicula.to_dict() for pelicula in self.peliculas],
+            'personajes': [personaje.to_dict() for personaje in self.personajes]
+        }

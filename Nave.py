@@ -30,3 +30,15 @@ class Nave(MedioTransporte):
         for piloto in self.pilotos:
             print(f"\t{piloto}")
         print()
+        
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'nombre': self.nombre,
+            'longitud_nave': self.longitud_nave,
+            'capacidad_carga': self.capacidad_carga,
+            'costo': self.costo,
+            'pilotos': self.pilotos,  # Suponiendo que son IDs o nombres, si son objetos necesitas convertirlos también
+            'clasificacion_hiperimpulsor': self.clasificacion_hiperimpulsor,
+            'mglt': self.mglt
+        }
