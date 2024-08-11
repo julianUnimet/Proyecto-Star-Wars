@@ -108,4 +108,17 @@ class Personaje:
         
         return medios_transporte_pilota
     
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'nombre': self.nombre,
+            'planeta_origen': self.planeta_origen.to_dict() if self.planeta_origen else None,
+            'planeta_origen_id': self.planeta_origen_id,
+            'peliculas': [pelicula.to_dict() for pelicula in self.peliculas],
+            'genero': self.genero,
+            'especie': self.especie.to_dict() if self.especie else None,
+            'naves': [nave.to_dict() for nave in self.naves],
+            'vehiculos': [vehiculo.to_dict() for vehiculo in self.vehiculos]
+        }
+    
 
