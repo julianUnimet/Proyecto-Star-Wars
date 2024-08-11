@@ -23,7 +23,7 @@ class App:
             #Se solicita la entrada al usuario y se verifica que sea valida
             opcion = 999
             while opcion == 999:                
-                opcion = self.seleccionar_opcion([0, 1, 2, 3, 4, 5])
+                opcion = self.seleccionar_opcion([0, 1, 2, 3, 4, 5,6,7])
 
             #Se hace el llamado a la funcion correspondiente a la opcion seleccionada         
             if opcion == 0:
@@ -38,8 +38,11 @@ class App:
                 self.buscar_personaje(self.personajes) 
             elif opcion==5:
                 Mision.crear_mision(self.planetas,self.naves,self.personajes,self.usuario)
-
-
+            elif opcion==6:
+                Mision.mostrar_misiones_usuario(self.usuario,self.planetas,self.naves,self.personajes)
+            elif opcion==7:
+                Mision.modificar_mision(self.usuario,self.planetas,self.naves,self.personajes)
+            input("Presiona enter para continuar")
     def inicio_sesion(self):
         print("1. Registrar usuario")
         print("2. Validar usuario")
@@ -74,6 +77,8 @@ class App:
         print("\t[3] Mostrar lista de planetas")
         print("\t[4] Buscar personaje")
         print("\t[5] Crear mision")
+        print("\t[6] Ver misiones")
+        print("\t[7] Modificar mision")
         print("\t[0] Salir del programa")
         print()
 

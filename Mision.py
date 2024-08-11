@@ -128,3 +128,122 @@ def crear_mision(planetas, naves, integrantes, usuario):
     misiones.append(mision)
     guardar_misiones(misiones, usuario)
     return mision
+
+def mostrar_misiones(misiones):
+    if not misiones:
+        print("No hay misiones guardadas para mostrar.")
+        return
+
+    for idx, mision in enumerate(misiones, start=1):
+        print(f"Misión {idx}:")
+        print(f"  Nombre: {mision.nombre}")
+        print(f"  Planeta Destino: {mision.planeta_destino.nombre}")
+        print(f"  Nave: {mision.nave.nombre}")
+        print(f"  Armas: {', '.join(mision.armas)}")
+        print(f"  Integrantes: {', '.join([integrante.nombre for integrante in mision.integrantes])}")
+        print()
+
+def mostrar_misiones_usuario(usuario, planetas, naves, personajes):
+    # Cargar las misiones del usuario
+    misiones = cargar_misiones(usuario, planetas, naves, personajes)
+    
+    # Mostrar las misiones cargadas
+    if not misiones:
+        print(f"No hay misiones guardadas para el usuario {usuario}.")
+    else:
+        print(f"Misiones guardadas para el usuario {usuario}:")
+        mostrar_misiones(misiones)
+
+def modificar_mision(usuario, planetas, naves, personajes):
+    # Cargar las misiones del usuario
+    misiones = cargar_misiones(usuario, planetas, naves, personajes)
+    
+    if not misiones:
+        print(f"No hay misiones guardadas para el usuario {usuario}.")
+        return
+    
+    # Mostrar las misiones y permitir al usuario seleccionar cuál modificar
+    mostrar_misiones(misiones)
+    
+    try:
+        num_mision = int(input("Ingrese el número de la misión que desea modificar: ")) - 1
+        if num_mision < 0 or num_mision >= len(misiones):
+            print("Número de misión no válido.")
+            return
+    except ValueError:
+        print("Entrada no válida. Por favor, ingrese un número.")
+        return
+    
+    mision = misiones[num_mision]
+
+    # Modificar nombre
+    nuevo_nombre = input(f"Ingrese el nuevo nombre de la misión (actual: {mision.nombre}) o presione Enter para mantenerlo: ")
+    if nuevo_nombre.strip():
+        mision.nombre = nuevo_nombre.strip()
+
+    # Modificar planeta destino
+    print("Seleccione el nuevo planeta de destino:")
+    for i, planeta in enumerate(planetas):
+        print(f"{i + 1}. {planeta.nombre}")
+    try:
+        nuevo_planeta_index = input(f"Ingrese el número del nuevo planeta de destino (actual: {mision.planeta_destino.nombre}): ")
+        if nuevo_planeta_index.strip():
+            nuevo_planeta_index = int(nuevo_planeta_index) - 1
+            if 0 <= nuevo_planeta_index < len(planetas):
+                mision.planeta_destino = planetas[nuevo_planeta_index]
+            else:
+                print("Número de planeta no válido.")
+    except ValueError:
+        print("Entrada no válida. Por favor, ingrese un número válido para el planeta.")
+
+    # Modificar nave
+    print("Seleccione la nueva nave:")
+    for i, nave in enumerate(naves):
+        print(f"{i + 1}. {nave.nombre}")
+    try:
+        nueva_nave_index = input(f"Ingrese el número de la nueva nave (actual: {mision.nave.nombre}): ")
+        if nueva_nave_index.strip():
+            nueva_nave_index = int(nueva_nave_index) - 1
+            if 0 <= nueva_nave_index < len(naves):
+                mision.nave = naves[nueva_nave_index]
+            else:
+                print("Número de nave no válido.")
+    except ValueError:
+        print("Entrada no válida. Por favor, ingrese un número válido para la nave.")
+
+    # Modificar armas
+    armas_seleccionadas = []
+    print("Escriba hasta 7 nombres de armas (escriba 'done' para terminar):")
+    while len(armas_seleccionadas) < 7:
+        arma = input(f"Arma {len(armas_seleccionadas)+1} (actual: {', '.join(mision.armas)}): ").strip()
+        if arma.lower() == 'done':
+            break
+        elif arma:
+            armas_seleccionadas.append(arma)
+    if armas_seleccionadas:
+        mision.armas = armas_seleccionadas
+
+    # Modificar integrantes
+    integrantes_seleccionados = []
+    print("Seleccione hasta 7 integrantes (escriba el número correspondiente; escriba '0' para terminar):")
+    for i, integrante in enumerate(personajes):
+        print(f"{i + 1}. {integrante.nombre}")
+    while len(integrantes_seleccionados) < 7:
+        try:
+            integrante_index = input(f"Seleccione el integrante {len(integrantes_seleccionados)+1} (actual: {', '.join([integrante.nombre for integrante in mision.integrantes])}): ")
+            if integrante_index.strip():
+                integrante_index = int(integrante_index) - 1
+                if 0 <= integrante_index < len(personajes):
+                    integrantes_seleccionados.append(personajes[integrante_index])
+                else:
+                    print("Número de integrante no válido.")
+            elif integrante_index == '0':
+                break
+        except ValueError:
+            print("Entrada no válida. Por favor, ingrese un número válido para el integrante.")
+    if integrantes_seleccionados:
+        mision.integrantes = integrantes_seleccionados
+
+    # Guardar las misiones actualizadas
+    guardar_misiones(misiones, usuario)
+    print("Misión modificada exitosamente.")
