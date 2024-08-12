@@ -3,7 +3,7 @@ import creador_de_objetos
 import Mision
 import registro_usuario
 import sys
-
+import manejadorcsv
 class App:
     def __init__(self) -> None:
         funciones.limpiar_consola()
@@ -39,12 +39,13 @@ class App:
             elif opcion == 8:
                 self.estadisticos()
             elif opcion==5:
-                Mision.crear_mision(self.planetas,self.naves,self.personajes,self.usuario)
+                Mision.crear_mision(self.planetas,self.naves,self.personajes,manejadorcsv.leer_armas_desde_csv(),self.usuario)
             elif opcion==6:
                 Mision.mostrar_misiones_usuario(self.usuario,self.planetas,self.naves,self.personajes)
             elif opcion==7:
                 Mision.modificar_mision(self.usuario,self.planetas,self.naves,self.personajes)
             input("Presiona enter para continuar")
+
     def inicio_sesion(self):
         print("1. Registrar usuario")
         print("2. Validar usuario")

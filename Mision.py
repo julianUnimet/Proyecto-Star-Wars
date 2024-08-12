@@ -144,13 +144,14 @@ def cargar_misiones(usuario, planetas, naves, personajes):
 
     return misiones
 
-def crear_mision(planetas, naves, integrantes, usuario):
+def crear_mision(planetas, naves, integrantes, armas, usuario):
     """
-    Permite al usuario crear una nueva misión, seleccionando los detalles desde listas predefinidas de planetas, naves y personajes.
+    Permite al usuario crear una nueva misión, seleccionando los detalles desde listas predefinidas de planetas, naves, armas y personajes.
 
     Args:
         planetas (list): Lista de objetos Planeta disponibles.
         naves (list): Lista de objetos Nave disponibles.
+        armas (list): Lista de objetos Arma disponibles.
         integrantes (list): Lista de objetos Personaje disponibles.
         usuario (str): Nombre del usuario que está creando la misión.
 
@@ -184,14 +185,22 @@ def crear_mision(planetas, naves, integrantes, usuario):
     nave_index = int(input("Ingrese el número de la nave seleccionada: ")) - 1
     nave = naves[nave_index]
 
-    # Entrada de armas
+    # Selección de armas
     armas_seleccionadas = []
-    print("Escriba hasta 7 nombres de armas (escriba 'done' para terminar):")
+    print("Seleccione hasta 7 armas (escriba el número correspondiente; escriba '0' para terminar):")
+    for i, arma in enumerate(armas):
+        print(f"{i + 1}. {arma.nombre}")
     while len(armas_seleccionadas) < 7:
-        arma = input(f"Arma {len(armas_seleccionadas)+1}: ")
-        if arma.lower() == 'done':
+        arma_index = int(input("Ingrese el número del arma seleccionada: ")) - 1
+        if arma_index == -1:
             break
-        armas_seleccionadas.append(arma)
+        
+        if arma_index < 0 or arma_index >= len(armas):
+            print("Número de arma no válido. Intente de nuevo.")
+            continue
+        
+        seleccionado = armas[arma_index]
+        armas_seleccionadas.append(seleccionado.nombre)
 
     # Selección de integrantes
     integrantes_seleccionados = []
@@ -216,6 +225,7 @@ def crear_mision(planetas, naves, integrantes, usuario):
     misiones.append(mision)
     guardar_misiones(misiones, usuario)
     return mision
+
 
 def mostrar_misiones(misiones):
     """
