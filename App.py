@@ -150,7 +150,7 @@ class App:
             # Se solicita la entrada al usuario y se verifica que sea válida
             opcion = 999
             while opcion == 999:
-                opcion = self.seleccionar_opcion([0, 1, 2, 3, 4, 5])
+                opcion = self.seleccionar_opcion([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 
             # Se hace el llamado a la función correspondiente a la opción seleccionada
             if opcion == 0:
@@ -165,6 +165,18 @@ class App:
                 self.estadisticosObj.naves_por_hiperimpulsor()
             elif opcion == 5:
                 self.estadisticosObj.naves_por_mglt()
+            elif opcion == 6:
+                funciones.limpiar_consola()
+                self.estadisticosObj.mostrar_estadisticos_propiedad("Hiperimpulsor")
+            elif opcion == 7:
+                funciones.limpiar_consola()
+                self.estadisticosObj.mostrar_estadisticos_propiedad("MGLT")
+            elif opcion == 8:
+                funciones.limpiar_consola()
+                self.estadisticosObj.mostrar_estadisticos_propiedad("Velocidad Maxima en Atmosfera")
+            elif opcion == 9:
+                funciones.limpiar_consola()
+                self.estadisticosObj.mostrar_estadisticos_propiedad("Costo")
         
 
     def imprimir_menu_estadisticas(self):
@@ -172,11 +184,17 @@ class App:
         funciones.limpiar_consola()
         print("ESTADÍSTICAS DE LA SAGA STAR WARS")
         print()
+        print("Luego de visualizar alguna de las graficas, cierrela para volver al menu")
+        print()
         print("\t[1] Cantidades de personajes por planeta")
         print("\t[2] Comparacion de naves por longitud")
         print("\t[3] Comparacion de naves por capacidad de carga")
         print("\t[4] Comparacion de naves por clasificacion de hiperimpulsor")
         print("\t[5] Comparacion de naves por MGLT")
+        print("\t[6] Estadisticos de hiperimpulsor")
+        print("\t[7] Estadisticos de MGLT")
+        print("\t[8] Estadisticos de velocidad maxima en atmosfera")
+        print("\t[9] Estadisticos de costo")
         print("\t[0] Volver al menú anterior")
         print()
 
