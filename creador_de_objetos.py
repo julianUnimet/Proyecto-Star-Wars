@@ -4,6 +4,7 @@ from Planeta import Planeta
 from Nave import Nave
 from Vehiculo import Vehiculo
 from Personaje import Personaje
+from Estadisticas import Estadisticas
 import manejador_API
 
 def crear_peliculas():
@@ -170,6 +171,9 @@ def crear_personajes(planetas:list, peliculas:list, especies:list, naves:list, v
         personajesOBJ.append(Personaje(id, nombre, id_planeta_origen, planetas, peliculas, genero, especies, naves, vehiculos))
     
     return personajesOBJ
+
+def crear_estadisticos():
+    return Estadisticas()
 
 def extractor_id_desde_url(lista_urls:list):
     """Esta funcion extrae el id de los url aprovechando que el id esta al final del url. Solo funciona si los unicos valores numericos que aparecen son los del id
