@@ -36,14 +36,14 @@ class App:
                 self.mostrar_lista_objetos(self.planetas, "planetas")
             elif opcion == 4:
                 self.buscar_personaje(self.personajes) 
-            elif opcion == 8:
-                self.estadisticos()
             elif opcion==5:
                 Mision.crear_mision(self.planetas,self.naves,self.personajes,self.usuario)
             elif opcion==6:
                 Mision.mostrar_misiones_usuario(self.usuario,self.planetas,self.naves,self.personajes)
             elif opcion==7:
                 Mision.modificar_mision(self.usuario,self.planetas,self.naves,self.personajes)
+            elif opcion == 8:
+                self.estadisticos()
             input("Presiona enter para continuar")
     def inicio_sesion(self):
         print("1. Registrar usuario")
