@@ -9,8 +9,18 @@ def registrar_usuario(nombre_usuario, clave):
         clave (str): La clave del usuario.
 
     Returns:
-        bool: True si el registro fue exitoso, False si el usuario ya existe.
+        bool: True si el registro fue exitoso, False si el usuario ya existe o si el nombre de usuario/clave no son válidos.
     """
+    # Comprobación del nombre de usuario
+    if not nombre_usuario or nombre_usuario.strip() == "":
+        print("El nombre de usuario no puede estar vacío o ser solo espacios en blanco.")
+        return False
+    
+    # Comprobación de la clave
+    if not clave or clave.strip() == "":
+        print("La clave no puede estar vacía o ser solo espacios en blanco.")
+        return False
+
     archivo_usuarios = 'usuarios.txt'
 
     if os.path.exists(archivo_usuarios):
@@ -44,6 +54,16 @@ def validar_usuario(nombre_usuario, clave):
     Returns:
         bool: True si la validación fue exitosa, False en caso contrario.
     """
+    # Comprobación del nombre de usuario
+    if not nombre_usuario or nombre_usuario.strip() == "":
+        print("El nombre de usuario no puede estar vacío o ser solo espacios en blanco.")
+        return False
+    
+    # Comprobación de la clave
+    if not clave or clave.strip() == "":
+        print("La clave no puede estar vacía o ser solo espacios en blanco.")
+        return False
+
     archivo_usuarios = 'usuarios.txt'
 
     if not os.path.exists(archivo_usuarios):
