@@ -8,41 +8,63 @@ class Estadisticas:
         self.naves_datos = pd.read_csv('csv/starships.csv')
 
     def personajes_por_planeta(self):
+        """Crea un diagrama de barras con la cantidad de personajes por plan
+        """
         personajes = self.planetas_datos["residents"] # se cargan los datos de residentes
         personajes = personajes.str.split(',').str.len() #Se cuentan los residentes
-
         self.__diagrama_barras("Cantidad de residentes por planeta", self.planetas_datos["name"], "Planetas", personajes, "Cantidad de residentes")
 
     def naves_por_longitud(self):
-        longitud = self.naves_datos["length"]
-        longitud = longitud.astype(float)
-        nombre_naves = self.naves_datos["name"]
-
+        """Crea un diagrama de barras con la longitud de las naves
+        """
+        nombre_naves, longitud = self.__valores_para_diagrama_barras("length")
         self.__diagrama_barras("Comparacion de longitud de naves", nombre_naves, "Naves", longitud, "Longitud de naves", True)
 
     def naves_por_capacidad(self):
-        capacidad = self.naves_datos["cargo_capacity"]
-        capacidad = capacidad.astype(float)
-        nombre_naves = self.naves_datos["name"]
-
+        """Crea un diagrama de barras con la capacidad de las naves
+        """
+        nombre_naves, capacidad = self.__valores_para_diagrama_barras("cargo_capacity")
         self.__diagrama_barras("Comparacion de capacidad de carga de naves", nombre_naves, "Naves", capacidad, "Capacidad de carga de naves", True)
 
-
     def naves_por_hiperimpulsor(self):
-        hiperimpulsor = self.naves_datos["hyperdrive_rating"]
-        hiperimpulsor = hiperimpulsor.astype(float)
-        nombre_naves = self.naves_datos["name"]
-
+        """Crea un diagrama de barras con el hiperimpulsor de las naves
+        """
+        nombre_naves, hiperimpulsor = self.__valores_para_diagrama_barras("hyperdrive_rating")
         self.__diagrama_barras("Comparacion de hiperimpulsor de naves", nombre_naves, "Naves", hiperimpulsor, "Hiperimpulsor de naves")
 
     def naves_por_mglt(self):
-        mglt = self.naves_datos["MGLT"]
-        mglt = mglt.astype(float)
-        nombre_naves = self.naves_datos["name"]
-
+        """Crea un diagrama de barras con el mglt de las naves
+        """
+        nombre_naves, mglt = self.__valores_para_diagrama_barras("MGLT")
         self.__diagrama_barras("Comparacion de MGLT de naves", nombre_naves, "Naves", mglt, "MGLT de naves")
 
-    def __diagrama_barras(self, titulo, datos_x, titulo_x, datos_y, titulo_y, escala_log=False):
+    def __valores_para_diagrama_barras(self, propiedad:str):
+        """Extrae los valores de una propiedad de las naves para crear un diagrama de barras.
+
+        Args:
+            propiedad (str): nombre de la propiedad a extraer, valores posibles: "length", "cargo_capacity", "hyperdrive_rating", "MGLT"
+
+        Returns:
+            _type_: nombres_naves, valores_propiedad
+        """
+        
+        nombres_naves = self.naves_datos["name"]
+        valores_propiedad = self.naves_datos[propiedad]
+        valores_propiedad = valores_propiedad.astype(float)
+
+        return nombres_naves, valores_propiedad
+
+    def __diagrama_barras(self, titulo:str, datos_x, titulo_x:str, datos_y, titulo_y:str, escala_log=False):
+        """Crea un diagrama de barras
+
+        Args:
+            titulo (str): Titulo de la grafica
+            datos_x (_type_): Valores del eje x
+            titulo_x (str): Titulo del eje x
+            datos_y (_type_): Valores del eje y
+            titulo_y (str): Titulo del eje y
+            escala_log (bool, optional): True para colocar el eje y en escala logaritmica. Defaults to False.
+        """        
         plt.bar(datos_x, datos_y)
         plt.title(titulo)
         plt.ylabel(titulo_y)
@@ -53,7 +75,12 @@ class Estadisticas:
         plt.tight_layout() #Se ajusta la grafica para que no se corten los nombres
         plt.show()
 
-    def tabla_estadisticos(self):
+    def __tabla_estadisticos(self):
+        """Calcula los estadisticos de las propiedades de las naves por clase de nave.
+
+        Returns:
+            DataFrame: tabla con los estadisticos de las propiedades de las naves por clase de nave
+        """
         # Obtener las clases de nave únicas
         clases_naves = sorted(self.naves_datos["starship_class"].unique())
 
@@ -82,31 +109,12 @@ class Estadisticas:
         for clase in clases_naves:
             # Filtrar los datos por clase de nave
             datos_clase = self.naves_datos[self.naves_datos["starship_class"] == clase]
-            
-
-            # Calcular los estadisticos para el hiperimpulsor
-            promedio_hiperimpulsor = datos_clase["hyperdrive_rating"].mean()
-            moda_hiperimpulsor = datos_clase["hyperdrive_rating"].mode()[0]
-            maximo_hiperimpulsor = datos_clase["hyperdrive_rating"].max()
-            minimo_hiperimpulsor = datos_clase["hyperdrive_rating"].min()
-
-            # Calcular los estadisticos para el MGLT
-            promedio_mglt = datos_clase["MGLT"].mean()
-            moda_mglt = datos_clase["MGLT"].mode()
-            maximo_mglt = datos_clase["MGLT"].max()
-            minimo_mglt = datos_clase["MGLT"].min()
-
-            # Calcular los estadisticos para la velocidad maxima en atmosfera
-            promedio_velocidad = datos_clase["max_atmosphering_speed"].mean()
-            moda_velocidad = datos_clase["max_atmosphering_speed"].mode()
-            maximo_velocidad = datos_clase["max_atmosphering_speed"].max()
-            minimo_velocidad = datos_clase["max_atmosphering_speed"].min()
-
-            # Calcular los estadisticos para el costo
-            promedio_costo = datos_clase["cost_in_credits"].mean()
-            moda_costo = datos_clase["cost_in_credits"].mode()
-            maximo_costo = datos_clase["cost_in_credits"].max()
-            minimo_costo = datos_clase["cost_in_credits"].min()
+           
+            # Calcular los estadisticos para la as propiedades
+            promedio_velocidad, moda_velocidad, maximo_velocidad, minimo_velocidad = self.valores_estadisticos(datos_clase, "max_atmosphering_speed")
+            promedio_costo, moda_costo, maximo_costo, minimo_costo = self.valores_estadisticos(datos_clase, "cost_in_credits")
+            promedio_mglt, moda_mglt, maximo_mglt, minimo_mglt = self.valores_estadisticos(datos_clase, "MGLT")
+            promedio_hiperimpulsor, moda_hiperimpulsor, maximo_hiperimpulsor, minimo_hiperimpulsor = self.valores_estadisticos(datos_clase, "hyperdrive_rating")
 
             # Agregar los estadisticos al diccionario
             estadisticos_por_clase["Clase de Nave"].append(clase)
@@ -126,39 +134,41 @@ class Estadisticas:
             estadisticos_por_clase["Moda Costo"].append(moda_costo)
             estadisticos_por_clase["Maximo Costo"].append(maximo_costo)
             estadisticos_por_clase["Minimo Costo"].append(minimo_costo)
-
-        # Crear un DataFrame a partir del diccionario de estadisticos
-        estadisticos_naves = pd.DataFrame(estadisticos_por_clase)
-
-        # Mostrar la tabla de estadisticos
-        plt.figure(figsize=(12, 6))
-        plt.axis('off')
-        table = plt.table(cellText=estadisticos_naves.values, colLabels=estadisticos_naves.columns, loc='center', cellLoc='center')
-        table.auto_set_font_size(False)
-        table.set_fontsize(8)
         
-        # Ajustar el texto de los encabezados para que no se salgan de las celdas
-        table.auto_set_column_width([0] + list(range(1, len(estadisticos_naves.columns))))
-        table.scale(1, 1.5) # Increase the height of the table cells
-        table.auto_set_font_size(False)
-        table.set_fontsize(8)
-        table.auto_set_column_width([0] + list(range(1, len(estadisticos_naves.columns))))
-        table.auto_set_column_width([0] + list(range(1, len(estadisticos_naves.columns))))
-        plt.tight_layout() #Se ajusta la grafica para que no se corten los nombres
-        plt.title("Estadisticos por Clase de Nave")
-        plt.show()
-
-        moda_hiperimpulsor = estadisticos_naves["Moda Hiperimpulsor"]
-        moda_hiperimpulsor_values = estadisticos_naves["Moda Hiperimpulsor"].values
-
-        #print(moda_hiperimpulsor)
-        #print(moda_hiperimpulsor_values)
-
-        print(estadisticos_naves["Promedio Velocidad Maxima en Atmosfera"])
+        estadisticos_naves = pd.DataFrame(estadisticos_por_clase) # Crear un DataFrame a partir del diccionario de estadisticos
 
 
-#datos = Estadisticas()
-#datos.tabla_estadisticos()
-#datos.naves_por_mglt()
+        return estadisticos_naves
+
+    def valores_estadisticos(self, datos_clase, propiedad:str):
+        """Calcula los valores estadisticos de una propiedad de una clase de nave.
+
+        Args:
+            datos_clase (_type_): Datos de la clase de nave
+            propiedad (str): Propiedad de la nave, valores posible: "max_atmosphering_speed", "cost_in_credits", "MGLT", "hyperdrive_rating"
+        Returns:
+            _type_: promedio, moda, maximo, minimo
+        """
+        promedio_velocidad = round(datos_clase[propiedad].mean(), 2)
+        moda_velocidad = datos_clase[propiedad].mode().values
+        maximo_velocidad = datos_clase[propiedad].max()
+        minimo_velocidad = datos_clase[propiedad].min()
+        return promedio_velocidad,moda_velocidad,maximo_velocidad,minimo_velocidad
+    
+    def mostrar_estadisticos_propiedad(self, propiedad:str):
+        """Imprime en pantalla una tabla con los estadisticos de la propiedad seleccionada.
+
+        Args:
+            propiedad (str): Valores posibles: "Hiperimpulsor", "MGLT", "Velocidad Maxima en Atmosfera", "Costo"
+        """        
+        estadisticos_naves = self.__tabla_estadisticos()
+        
+        columnas_propiedad = ["Clase de Nave", f"Promedio {propiedad}", f"Moda {propiedad}", f"Maximo {propiedad}", f"Minimo {propiedad}"] # Obtener las columnas correspondientes a la propiedad seleccionada
+        
+        estadisticos_propiedad = estadisticos_naves[columnas_propiedad] # Filtrar las columnas del DataFrame de estadisticos
+
+        print(estadisticos_propiedad)
+        print()
+        input("Ingrese cualquier tecla para continuar: ")
 
     
