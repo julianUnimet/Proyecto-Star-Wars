@@ -19,7 +19,7 @@ class App:
             #Se solicita la entrada al usuario y se verifica que sea valida
             opcion = 999
             while opcion == 999:                
-                opcion = self.seleccionar_opcion([0, 1, 2, 3, 4])
+                opcion = self.seleccionar_opcion([0, 1, 2, 3, 4, 5, 6, 7, 8])
 
             #Se hace el llamado a la funcion correspondiente a la opcion seleccionada         
             if opcion == 0:
@@ -32,6 +32,8 @@ class App:
                 self.mostrar_lista_objetos(self.planetas, "planetas")
             elif opcion == 4:
                 self.buscar_personaje(self.personajes)  
+            elif opcion == 8:
+                self.estadisticos()
 
 
 
@@ -46,6 +48,7 @@ class App:
         print("\t[2] Mostrar lista de seres vivos de la saga")
         print("\t[3] Mostrar lista de planetas")
         print("\t[4] Buscar personaje")
+        print("\t[8] Estadisticos de la saga")
         print("\t[0] Salir del programa")
         print()
 
@@ -113,6 +116,9 @@ class App:
                 personaje.informacion()
                 print("--------------------------------------------------")
 
+            print(f"Se encontraron {len(personajes)} personajes")
+            print()
+
         input("Ingrese cualquier tecla para volver al menu anterior: ")
             
 
@@ -133,6 +139,47 @@ class App:
                 personajes_encontrados.append(personaje)
         
         return personajes_encontrados
+    
+    def estadisticos(self):
+        """Imprime un menú para ver las estadísticas y permite al usuario seleccionar una opción.
+        Al presionar cero, se vuelve al menú anterior.
+        """
+        while True:
+            self.imprimir_menu_estadisticas()
+
+            # Se solicita la entrada al usuario y se verifica que sea válida
+            opcion = 999
+            while opcion == 999:
+                opcion = self.seleccionar_opcion([0, 1, 2, 3, 4, 5])
+
+            # Se hace el llamado a la función correspondiente a la opción seleccionada
+            if opcion == 0:
+                break
+            elif opcion == 1:
+                self.estadisticosObj.personajes_por_planeta()
+            elif opcion == 2:
+                 self.estadisticosObj.naves_por_longitud()
+            elif opcion == 3:
+                self.estadisticosObj.naves_por_capacidad()
+            elif opcion == 4:
+                self.estadisticosObj.naves_por_hiperimpulsor()
+            elif opcion == 5:
+                self.estadisticosObj.naves_por_mglt()
+        
+
+    def imprimir_menu_estadisticas(self):
+        """Imprime en pantalla el menú de estadísticas."""
+        funciones.limpiar_consola()
+        print("ESTADÍSTICAS DE LA SAGA STAR WARS")
+        print()
+        print("\t[1] Cantidades de personajes por planeta")
+        print("\t[2] Comparacion de naves por longitud")
+        print("\t[3] Comparacion de naves por capacidad de carga")
+        print("\t[4] Comparacion de naves por clasificacion de hiperimpulsor")
+        print("\t[5] Comparacion de naves por MGLT")
+        print("\t[0] Volver al menú anterior")
+        print()
+
 
     def crear_objetos(self):
         #Los metodos para crear objetos se deben llamar en este orden:
@@ -165,5 +212,6 @@ class App:
         for especie in self.especies:
             especie.referenciar_personajes(self.personajes)
         
+        self.estadisticosObj = creador_de_objetos.crear_estadisticos()
 
         
