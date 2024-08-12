@@ -1,0 +1,129 @@
+@startuml
+class App {
+    start()
+    imprimir_menu_principal()
+    seleccionar_opcion()
+    mostrar_lista_objetos()
+    buscar_personaje()
+    buscar_por_nombre()
+    crear_objetos()
+        peliculas
+    planetas
+    naves
+    vehiculos
+    especies
+    personajes
+    __init__()
+}
+
+class Pelicula {
+    informacion()
+    __tabulacion_opening()
+        titulo
+    episodio
+    fecha_lanzamiento
+    opening_crawl
+    director
+    especies
+    personajes
+    planetas
+    __init__()
+}
+
+class MedioTransporte {
+    informacion()
+        id
+    nombre
+    capacidad
+    costo
+    pilotos
+    __init__()
+}
+
+class Nave {
+    informacion()
+        clasificacion_hiperimpulsor
+    mglt
+    __init__()
+}
+
+class Vehiculo {
+    informacion()
+        __init__()
+}
+
+class Especie {
+    informacion()
+    referenciar_peliculas()
+    referenciar_planeta()
+    referenciar_personajes()
+        id
+    nombre
+    altura
+    clasificacion
+    lengua_materna
+    planeta_origen
+    personajes_de_esta_especie
+    peliculas
+    personajes_de_esta_especie
+    __init__()
+}
+
+class Planeta {
+    informacion()
+    referenciar_peliculas()
+    referenciar_personajes()
+        id
+    nombre
+    periodo_orbita
+    periodo_rotacion
+    cantidad_habitantes
+    tipo_clima
+    peliculas
+    personajes
+    __init__()
+}
+
+class Personaje {
+    informacion()
+    referenciar_planeta()
+    referenciar_peliculas()
+    referenciar_especie()
+    referenciar_medio_transporte()
+        id
+    nombre
+    planeta_origen
+    planeta_origen_id
+    peliculas
+    genero
+    especie
+    naves
+    vehiculos
+    __init__()
+}
+
+MedioTransporte <|-- Nave
+MedioTransporte <|-- Vehiculo
+
+App "1" *-- "1...n" Pelicula
+App "1" *-- "1...n" Planeta
+App "1" *-- "1...n" Nave
+App "1" *-- "1...n" Vehiculo
+App "1" *-- "1...n" Especie
+App "1" *-- "1...n" Personaje
+
+Planeta "1" o-- "1...n" Personaje
+Planeta "1" o-- "1...n" Pelicula
+
+Personaje "1" o-- "1" Especie
+Personaje "1" o-- "1" Planeta
+Personaje "1" o-- "1...n" Pelicula
+Personaje "1" o-- "1...n" Nave
+Personaje "1" o-- "1...n" Vehiculo
+
+Especie "1" o-- "1...n" Personaje
+Especie "1" o-- "1" Planeta
+
+
+
+@enduml

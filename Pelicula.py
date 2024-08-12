@@ -34,10 +34,6 @@ class Pelicula:
         print(self.opening_crawl)
         print()
 
-    def referenciar_personajes(self, personajes:list):
-        #Este metodo se usara una vez se creen todas las listas de objetos y sirve para referenciar los objetos en funcion del id o se crean las peliculas
-        #despues de crear los personajes, y especies y se les pasan las listas como argumentos
-        pass
 
     def __tabulacion_opening(self, opening:str):
         """Es un metodo privado que agrega una tabulacion a cada linea del opening crawl para que cuando se imprima junto con la demas informacion se vea mas ordenado
