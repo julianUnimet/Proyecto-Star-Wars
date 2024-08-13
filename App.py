@@ -4,6 +4,7 @@ import Mision
 import registro_usuario
 import sys
 import manejadorcsv
+
 class App:
     def __init__(self) -> None:
         funciones.limpiar_consola()
@@ -14,60 +15,69 @@ class App:
     def start(self):
         """Da inicio a todas las funcionalidades del programa
         """
-        self.inicio_sesion()
-        
         while True:
+            self.inicio_sesion()
             
-            self.imprimir_menu_principal()
+            while True:
+                
+                self.imprimir_menu_principal()
 
-            #Se solicita la entrada al usuario y se verifica que sea valida
-            opcion = 999
-            while opcion == 999:                
-                opcion = self.seleccionar_opcion([0, 1, 2, 3, 4, 5, 6, 7, 8])
+                #Se solicita la entrada al usuario y se verifica que sea valida
+                opcion = 999
+                while opcion == 999:                
+                    opcion = self.seleccionar_opcion([0, 1, 2, 3, 4, 5, 6, 7, 8])
 
-            #Se hace el llamado a la funcion correspondiente a la opcion seleccionada         
-            if opcion == 0:
-                break
-            elif opcion == 1:
-                self.mostrar_lista_objetos(self.peliculas, "peliculas")
-            elif opcion == 2:
-                self.mostrar_lista_objetos(self.especies, "seres vivos")
-            elif opcion == 3:
-                self.mostrar_lista_objetos(self.planetas, "planetas")
-            elif opcion == 4:
-                self.buscar_personaje(self.personajes) 
-            elif opcion==5:
-                Mision.crear_mision(self.planetas,self.naves,self.personajes,manejadorcsv.leer_armas_desde_csv(),self.usuario)
-            elif opcion==6:
-                Mision.mostrar_misiones_usuario(self.usuario,self.planetas,self.naves,self.personajes)
-            elif opcion==7:
-                Mision.modificar_mision(self.usuario,self.planetas,self.naves,self.personajes,manejadorcsv.leer_armas_desde_csv())
-            elif opcion == 8:
-                self.estadisticos()
-            input("Presiona enter para continuar")
+                #Se hace el llamado a la funcion correspondiente a la opcion seleccionada         
+                if opcion == 0:
+                    break
+                elif opcion == 1:
+                    self.mostrar_lista_objetos(self.peliculas, "peliculas")
+                elif opcion == 2:
+                    self.mostrar_lista_objetos(self.especies, "seres vivos")
+                elif opcion == 3:
+                    self.mostrar_lista_objetos(self.planetas, "planetas")
+                elif opcion == 4:
+                    self.buscar_personaje(self.personajes) 
+                elif opcion==5:
+                    Mision.crear_mision(self.planetas,self.naves,self.personajes,manejadorcsv.leer_armas_desde_csv(),self.usuario)
+                elif opcion==6:
+                    Mision.mostrar_misiones_usuario(self.usuario,self.planetas,self.naves,self.personajes)
+                    input("Ingrese cualquier tecla para continuar: ")
+                elif opcion==7:
+                    Mision.modificar_mision(self.usuario,self.planetas,self.naves,self.personajes,manejadorcsv.leer_armas_desde_csv())
+                elif opcion == 8:
+                    self.estadisticos()
+                
 
     def inicio_sesion(self):
-        print("1. Registrar usuario")
-        print("2. Validar usuario")
-        print("3. Salir")
 
         while True:
+            funciones.limpiar_consola()
+
+            print("[1] Registrar usuario")
+            print("[2] Validar usuario")
+            print("[0] Salir")
+            print()
             opcion = input("Seleccione una opción: ")
 
             if opcion == '1':
+                funciones.limpiar_consola()
                 nombre_usuario = input("Ingrese el nombre de usuario: ")
                 clave = input("Ingrese la clave: ")
                 registro_usuario.registrar_usuario(nombre_usuario, clave)
+                input("Ingrese cualquier tecla para continuar")
             elif opcion == '2':
+                funciones.limpiar_consola()
                 nombre_usuario = input("Ingrese el nombre de usuario: ")
                 clave = input("Ingrese la clave: ")
                 if registro_usuario.validar_usuario(nombre_usuario, clave):
                     self.usuario=nombre_usuario
                     break
-            elif opcion == '3':
+            elif opcion == '0':
                 sys.exit()
             else:
                 print("Opción no válida, intente de nuevo.")
+                input("Ingrese cualquier tecla para continuar")
 
     def imprimir_menu_principal(self):
         """Limpia la consola e Imprime en pantalla el menu principal.
@@ -211,6 +221,7 @@ class App:
             elif opcion == 9:
                 funciones.limpiar_consola()
                 self.estadisticosObj.mostrar_estadisticos_propiedad("Costo")
+                
         
 
     def imprimir_menu_estadisticas(self):
