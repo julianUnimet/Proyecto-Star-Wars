@@ -217,7 +217,7 @@ class App:
                 self.estadisticosObj.mostrar_estadisticos_propiedad("MGLT")
             elif opcion == 8:
                 funciones.limpiar_consola()
-                self.estadisticosObj.mostrar_estadisticos_propiedad("Velocidad Maxima en Atmosfera")
+                self.estadisticosObj.mostrar_estadisticos_propiedad("Vel. Max. en Atmos.")
             elif opcion == 9:
                 funciones.limpiar_consola()
                 self.estadisticosObj.mostrar_estadisticos_propiedad("Costo")

@@ -95,10 +95,10 @@ class Estadisticas:
             "Moda MGLT": [],
             "Maximo MGLT": [],
             "Minimo MGLT": [],
-            "Promedio Velocidad Maxima en Atmosfera": [],
-            "Moda Velocidad Maxima en Atmosfera": [],
-            "Maximo Velocidad Maxima en Atmosfera": [],
-            "Minimo Velocidad Maxima en Atmosfera": [],
+            "Promedio Vel. Max. en Atmos.": [],
+            "Moda Vel. Max. en Atmos.": [],
+            "Maximo Vel. Max. en Atmos.": [],
+            "Minimo Vel. Max. en Atmos.": [],
             "Promedio Costo": [],
             "Moda Costo": [],
             "Maximo Costo": [],
@@ -126,10 +126,10 @@ class Estadisticas:
             estadisticos_por_clase["Moda MGLT"].append(moda_mglt)
             estadisticos_por_clase["Maximo MGLT"].append(maximo_mglt)
             estadisticos_por_clase["Minimo MGLT"].append(minimo_mglt)
-            estadisticos_por_clase["Promedio Velocidad Maxima en Atmosfera"].append(promedio_velocidad)
-            estadisticos_por_clase["Moda Velocidad Maxima en Atmosfera"].append(moda_velocidad)
-            estadisticos_por_clase["Maximo Velocidad Maxima en Atmosfera"].append(maximo_velocidad)
-            estadisticos_por_clase["Minimo Velocidad Maxima en Atmosfera"].append(minimo_velocidad)
+            estadisticos_por_clase["Promedio Vel. Max. en Atmos."].append(promedio_velocidad)
+            estadisticos_por_clase["Moda Vel. Max. en Atmos."].append(moda_velocidad)
+            estadisticos_por_clase["Maximo Vel. Max. en Atmos."].append(maximo_velocidad)
+            estadisticos_por_clase["Minimo Vel. Max. en Atmos."].append(minimo_velocidad)
             estadisticos_por_clase["Promedio Costo"].append(promedio_costo)
             estadisticos_por_clase["Moda Costo"].append(moda_costo)
             estadisticos_por_clase["Maximo Costo"].append(maximo_costo)
@@ -170,5 +170,6 @@ class Estadisticas:
         print(estadisticos_propiedad)
         print()
         input("Ingrese cualquier tecla para continuar: ")
+
 
     
