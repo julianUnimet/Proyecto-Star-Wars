@@ -1,6 +1,6 @@
 import csv
 import os
-import Arma  # Asegúrate de que la clase Arma esté en un archivo llamado arma.py o ajusta la importación según sea necesario
+from Arma import Arma  # Asegúrate de que la clase Arma esté en un archivo llamado arma.py o ajusta la importación según sea necesario
 
 def leer_armas_desde_csv():
     """
@@ -11,10 +11,11 @@ def leer_armas_desde_csv():
     """
     armas = []
     ruta_csv = os.path.join('csv', 'weapons.csv')
-
+    print(ruta_csv)
     with open(ruta_csv, newline='', encoding='utf-8') as csvfile:
         lector_csv = csv.DictReader(csvfile)
         for fila in lector_csv:
+            print(fila)
             arma = Arma(
                 id=fila['id'],
                 nombre=fila['name'],
@@ -29,3 +30,4 @@ def leer_armas_desde_csv():
             armas.append(arma)
 
     return armas
+

@@ -110,39 +110,37 @@ def cargar_misiones(usuario, planetas, naves, personajes):
 
     with open(archivo_misiones, 'r') as file:
         for linea in file:
-            # Separamos los valores en la línea
             datos_mision = linea.strip().split(',')
 
-            # Extraemos los valores desde el archivo
             nombre_mision = datos_mision[1]
             numero_planeta = datos_mision[2]
             numero_nave = datos_mision[3]
-            armas = datos_mision[4].split('|')  # Lista de nombres de armas
-            numero_integrantes = datos_mision[5].split('|')  # Lista de IDs de personajes
+            armas = datos_mision[4].split('|')
+            numero_integrantes = datos_mision[5].split('|')
 
             # Buscar el objeto Planeta correspondiente al numero_planeta
             planeta_destino = next((planeta for planeta in planetas if planeta.id == numero_planeta), None)
             if not planeta_destino:
-                print(f"Planeta con ID {numero_planeta} no encontrado.")
+                print(f"Planeta con ID {numero_planeta} no encontrado. Saltando misión {nombre_mision}.")
                 continue
 
             # Buscar el objeto Nave correspondiente al numero_nave
             nave = next((nave for nave in naves if nave.id == numero_nave), None)
             if not nave:
-                print(f"Nave con ID {numero_nave} no encontrada.")
+                print(f"Nave con ID {numero_nave} no encontrada. Saltando misión {nombre_mision}.")
                 continue
 
             # Buscar los objetos Personaje correspondientes a los números de los integrantes
             integrantes = [personaje for personaje in personajes if personaje.id in numero_integrantes]
-            if len(integrantes) != len(numero_integrantes):
-                print(f"No se encontraron todos los personajes para la misión {nombre_mision}.")
-                continue
+            #if len(integrantes) != len(numero_integrantes):
+                #print(f"Algunos personajes no fueron encontrados para la misión {nombre_mision}. Misión cargada parcialmente.")
 
             # Crear la misión y agregarla a la lista de misiones
             mision = Mision(nombre_mision, planeta_destino, nave, armas, integrantes)
             misiones.append(mision)
 
     return misiones
+
 
 def crear_mision(planetas, naves, integrantes, armas, usuario):
     """
@@ -250,9 +248,10 @@ def mostrar_misiones(misiones):
         print(f"  Nombre: {mision.nombre}")
         print(f"  Planeta Destino: {mision.planeta_destino.nombre}")
         print(f"  Nave: {mision.nave.nombre}")
-        print(f"  Armas: {', '.join(mision.armas)}")
+        print(f"  Armas: {', '.join(mision.armas)}") 
         print(f"  Integrantes: {', '.join([integrante.nombre for integrante in mision.integrantes])}")
         print()
+
 
 def mostrar_misiones_usuario(usuario, planetas, naves, personajes):
     """
@@ -276,7 +275,8 @@ def mostrar_misiones_usuario(usuario, planetas, naves, personajes):
         print(f"Misiones guardadas para el usuario {usuario}:")
         mostrar_misiones(misiones)
 
-def modificar_mision(usuario, planetas, naves, personajes):
+
+def modificar_mision(usuario, planetas, naves, personajes, armas):
     """
     Permite al usuario modificar los detalles de una misión existente.
 
@@ -348,15 +348,35 @@ def modificar_mision(usuario, planetas, naves, personajes):
 
     # Modificar armas
     armas_seleccionadas = []
-    print("Escriba hasta 7 nombres de armas (escriba 'done' para terminar):")
+    print("Seleccione hasta 7 armas (escriba el número correspondiente; escriba '0' para terminar):")
+    for i, arma in enumerate(armas):
+        print(f"{i + 1}. {arma.nombre}")
+
     while len(armas_seleccionadas) < 7:
-        arma = input(f"Arma {len(armas_seleccionadas)+1} (actual: {', '.join(mision.armas)}): ").strip()
-        if arma.lower() == 'done':
-            break
-        elif arma:
-            armas_seleccionadas.append(arma)
+        try:
+            arma_index = int(input(f"Ingrese el número del arma seleccionada (actual: {', '.join(mision.armas)}): ")) - 1
+            if arma_index == -1:
+                break
+            
+            if arma_index < 0 or arma_index >= len(armas):
+                print("Número de arma no válido. Intente de nuevo.")
+                continue
+            
+            seleccionado = armas[arma_index]
+            
+            # Verifica si el arma ya ha sido seleccionada
+            if seleccionado.nombre in armas_seleccionadas:
+                print(f"El arma {seleccionado.nombre} ya ha sido seleccionada. Elija otra.")
+                continue
+            
+            armas_seleccionadas.append(seleccionado.nombre)
+            
+        except ValueError:
+            print("Entrada no válida. Por favor, ingrese un número.")
+
     if armas_seleccionadas:
         mision.armas = armas_seleccionadas
+
 
     # Modificar integrantes
     integrantes_seleccionados = []
@@ -368,7 +388,9 @@ def modificar_mision(usuario, planetas, naves, personajes):
             integrante_index = input(f"Seleccione el integrante {len(integrantes_seleccionados)+1} (actual: {', '.join([integrante.nombre for integrante in mision.integrantes])}): ")
             if integrante_index.strip():
                 integrante_index = int(integrante_index) - 1
-                if 0 <= integrante_index < len(personajes):
+                if integrante_index == 0:
+                    break
+                elif 0 <= integrante_index < len(personajes):
                     integrantes_seleccionados.append(personajes[integrante_index])
                 else:
                     print("Número de integrante no válido.")

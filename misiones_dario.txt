@@ -1,1 +1,1 @@
-darip,mision1,1,2,escopeta,2|1
+dario,mision1,3,2,DL-44 Blaster Pistol|E-11 Blaster Rifle,3|2|2|2|2|2|2

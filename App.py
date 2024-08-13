@@ -41,7 +41,7 @@ class App:
             elif opcion==6:
                 Mision.mostrar_misiones_usuario(self.usuario,self.planetas,self.naves,self.personajes)
             elif opcion==7:
-                Mision.modificar_mision(self.usuario,self.planetas,self.naves,self.personajes)
+                Mision.modificar_mision(self.usuario,self.planetas,self.naves,self.personajes,manejadorcsv.leer_armas_desde_csv())
             elif opcion == 8:
                 self.estadisticos()
             input("Presiona enter para continuar")
